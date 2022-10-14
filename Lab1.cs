@@ -7,17 +7,17 @@ namespace ProjectOne
 
     public class Game
     {
-        public GameAccount gamer;
-        public GameAccount oponent;
+        public GameAccount player;
+        public GameAccount enemy;
         public int raiting;
         public Boolean status;
         public  static int id = 0;
         public int index;
 
-        public Game(GameAccount gamer, GameAccount oponent, int raiting, Boolean status)
+        public Game(GameAccount player, GameAccount player2, int raiting, Boolean status)
         {
-            this.gamer = gamer;
-            this.oponent = oponent;
+            this.player = player;
+            this.enemy = player2;
             this.raiting = raiting;
             this.status = status;
             id++;
