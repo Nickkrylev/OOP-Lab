@@ -11,29 +11,32 @@ namespace ProjectOne
         public GameAccount enemy;
         public int raiting;
         public Boolean status;
-      
-        public int index ;
+        public static int id = 0;
+        public  int index;
 
-        public Game(GameAccount player, GameAccount player2, int raiting, Boolean status,int index)
+        public Game(GameAccount player, GameAccount player2, int raiting, Boolean status)
         {
             this.player = player;
             this.enemy = player2;
             this.raiting = raiting;
             this.status = status;
-           // id++;
-           this.index = index;
+            id++;
+            index = id;
         }
 
     }
+
+
+
     public class GameAccount
     {
-        public string UserName;
+        private string UserName ;
 
-        public int CurrentRating;
+        private int CurrentRating ;
 
-        public int GamesCount = 0;
-        public static int id = 1;
-        public int index;
+        public int GamesCount { get; set; }
+       
+       
 
         private List<Game> historyGames = new List<Game>();
 
@@ -45,16 +48,12 @@ namespace ProjectOne
 
         }
 
-        public void Game(GameAccount opponentName, int rating)
+        public void playGame(GameAccount opponentName, int rating)
         {
             if (rating <= 0)
             {
-                Console.WriteLine("Рейтинг должен быть больше 0");
-                do
-                {
-                    Console.WriteLine("Введите число больше 0");
-                    rating = Int32.Parse(Console.ReadLine());
-                } while (rating <= 0);
+               
+                throw new ArgumentOutOfRangeException("The current rating cannot be less than zero");
 
             }
             Random random = new Random();
@@ -69,9 +68,9 @@ namespace ProjectOne
             }
             this.GamesCount++;
             opponentName.GamesCount++;
-            index = id++;
-            this.historyGames.Add(new Game(this, opponentName, rating, statusWin,index));
-            opponentName.historyGames.Add(new Game(opponentName, this, rating, !statusWin,index));
+           
+            this.historyGames.Add(new Game(this, opponentName, rating, statusWin));
+            opponentName.historyGames.Add(new Game(opponentName, this, rating, !statusWin));
         }
 
         public void WinGame(GameAccount opponentName, int rating)
@@ -144,10 +143,10 @@ namespace ProjectOne
             GameAccount player1 = new GameAccount("player1");
             GameAccount player2 = new GameAccount("player2");
             GameAccount player3 = new GameAccount("player3");
-            player1.Game(player2, 2);
-            player2.Game(player1, 100);
-            player2.Game(player1, 10);
-            player3.Game(player1, 20);
+            player1.playGame(player2, 10);
+            player2.playGame(player1, 100);
+            player2.playGame(player1, 10);
+            player3.playGame(player1, 20);
             player1.GetStatus();
             player2.GetStatus();
             player3.GetStatus();
@@ -155,4 +154,4 @@ namespace ProjectOne
         }
     }
 }
-
+ 
