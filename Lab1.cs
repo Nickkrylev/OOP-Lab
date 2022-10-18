@@ -11,17 +11,17 @@ namespace ProjectOne
         public GameAccount enemy;
         public int raiting;
         public Boolean status;
-        public static int id = 0;
-        public int index;
+      
+        public int index ;
 
-        public Game(GameAccount player, GameAccount player2, int raiting, Boolean status)
+        public Game(GameAccount player, GameAccount player2, int raiting, Boolean status,int index)
         {
             this.player = player;
             this.enemy = player2;
             this.raiting = raiting;
             this.status = status;
-            id++;
-            index = id;
+           // id++;
+           this.index = index;
         }
 
     }
@@ -32,6 +32,8 @@ namespace ProjectOne
         public int CurrentRating;
 
         public int GamesCount = 0;
+        public static int id = 1;
+        public int index;
 
         private List<Game> historyGames = new List<Game>();
 
@@ -67,8 +69,9 @@ namespace ProjectOne
             }
             this.GamesCount++;
             opponentName.GamesCount++;
-            this.historyGames.Add(new Game(this, opponentName, rating, statusWin));
-            opponentName.historyGames.Add(new Game(opponentName, this, rating, !statusWin));
+            index = id++;
+            this.historyGames.Add(new Game(this, opponentName, rating, statusWin,index));
+            opponentName.historyGames.Add(new Game(opponentName, this, rating, !statusWin,index));
         }
 
         public void WinGame(GameAccount opponentName, int rating)
@@ -112,7 +115,7 @@ namespace ProjectOne
 
         public void GetStatus()
         {
-            Console.WriteLine("История игор");
+            Console.WriteLine("История игор для игрока  "+UserName);
             string status;
             foreach (var game in historyGames)
             {
@@ -140,11 +143,14 @@ namespace ProjectOne
         {
             GameAccount player1 = new GameAccount("player1");
             GameAccount player2 = new GameAccount("player2");
-
+            GameAccount player3 = new GameAccount("player3");
             player1.Game(player2, 2);
             player2.Game(player1, 100);
+            player2.Game(player1, 10);
+            player3.Game(player1, 20);
             player1.GetStatus();
             player2.GetStatus();
+            player3.GetStatus();
 
         }
     }
